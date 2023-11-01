@@ -1,0 +1,125 @@
+@color_1: #3e4f6d;
+
+.tarojs-table {
+    width: max-content;
+    min-width: 100%;
+    display: table;
+}
+
+.tarojs-table-colgroup {
+    display: table-column-group;
+
+    >view {
+        display: table-column;
+    }
+}
+
+.tarojs-table-thead {
+    display: table-header-group;
+    background: #edf2f7;
+
+    >.tarojs-table-row {
+        >.tarojs-table-cell {
+            color: @color_1;
+            background: #edf2f7;
+        }
+    }
+}
+
+.tarojs-table-fixed-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+.tarojs-table-fixed-column {
+    position: sticky;
+    z-index: 2;
+}
+
+.tarojs-table-fixed-left {
+    left: 0;
+}
+
+.tarojs-table-fixed-right {
+    right: 0;
+}
+
+.tarojs-table-fixed-header.tarojs-table-fixed-column {
+    z-index: 4;
+}
+
+.tarojs-table-fixed-left-last {
+    &::after {
+        right: -60px;
+        box-shadow: inset 15px 0 16px -8px rgba(5, 5, 5, 0.06);
+        position: absolute;
+        top: 0;
+        bottom: -1px;
+        width: 30px;
+        transform: translateX(-100%);
+        transition: box-shadow 0.3s;
+        content: "";
+        pointer-events: none;
+        z-index: 1;
+    }
+}
+
+.tarojs-table-fixed-right-first {
+    &::after {
+        left: 0;
+        box-shadow: inset -15px 0 16px -8px rgba(5, 5, 5, 0.06);
+        position: absolute;
+        top: 0;
+        bottom: -1px;
+        width: 30px;
+        transform: translateX(-100%);
+        transition: box-shadow 0.3s;
+        content: "";
+        pointer-events: none;
+        z-index: 1;
+    }
+}
+
+.tarojs-table-tbody {
+    display: table-row-group;
+}
+
+.tarojs-table-row {
+    display: table-row;
+
+    &:nth-child(even) {
+        >.tarojs-table-cell {
+            background: #f8f9fa;
+        }
+    }
+}
+
+.tarojs-table-cell {
+    display: table-cell;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    background: #fff;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+.tarojs-table-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.tarojs-table-align-left {
+    text-align: left;
+}
+
+.tarojs-table-align-center {
+    text-align: center;
+}
+
+.tarojs-table-align-right {
+    text-align: right;
+}
