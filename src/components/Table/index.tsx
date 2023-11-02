@@ -1,6 +1,6 @@
 import * as React from 'react';
 import cn from 'classnames';
-import { View, ScrollView, BaseEventOrigFunction, ScrollViewProps, CommonEventFunction } from '@tarojs/components';
+import { View, Text, Image, ScrollView, BaseEventOrigFunction, ScrollViewProps, CommonEventFunction } from '@tarojs/components';
 
 interface BaseRowProps {
     /** 行样式 */
@@ -53,6 +53,10 @@ export interface TableProps {
     rowKey?: string;
     /** 高度 */
     height?: number;
+    /** 加载中遮罩 */
+    loading?: boolean | LoadingProps;
+    /** 空数据时显示 */
+    empty?: TableEmptyProps;
     /** 滚动
      * @description — x: 容器宽度，内容宽度超过容器宽度时滚动
      * @description — y: 容器高度，内容高度超过容器高度时滚动
@@ -89,6 +93,13 @@ interface TableColGroupProps {
     columns: TableColumnProps[];
 }
 
+interface TableEmptyProps {
+    /** 自定义图片（src） */
+    img?: string,
+    /** 自定义提示文字 */
+    text?: string;
+}
+
 interface FixedColsProps {
     index: number;
     left?: number;
@@ -96,6 +107,61 @@ interface FixedColsProps {
     width: number;
     lastLeft?: boolean;
     firstRight?: boolean;
+}
+
+interface LoadingProps {
+    /** 是否显示 Loading */
+    show?: boolean,
+    /** 自定义loading图片（src） */
+    img?: string,
+    /** 自定义loading文字 */
+    text?: string;
+}
+
+interface TableLoadingProps {
+    loading?: boolean | LoadingProps;
+    children?: React.ReactNode;
+}
+
+const TableLoadingWrapper: React.FC<TableLoadingProps> = (props) => {
+    if (typeof props.loading === 'undefined' ||
+        (typeof props.loading === 'boolean' && !props.loading) ||
+        (typeof props.loading === 'object' && !props.loading?.show)
+    ) {
+        return props.children;
+    }
+
+    const imgEle = typeof props.loading === 'object' && props.loading.img ?
+        <Image className="tarojs-table-loading-img" mode="widthFix" src={props.loading.img} /> :
+        <Image className="tarojs-table-loading-img" mode="widthFix" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnPjxjaXJjbGUgY3g9IjEyIiBjeT0iMi41IiByPSIxLjUiIGZpbGw9IiM5MDlhYWEiIG9wYWNpdHk9Ii4xNCIvPjxjaXJjbGUgY3g9IjE2Ljc1IiBjeT0iMy43NyIgcj0iMS41IiBmaWxsPSIjOTA5YWFhIiBvcGFjaXR5PSIuMjkiLz48Y2lyY2xlIGN4PSIyMC4yMyIgY3k9IjcuMjUiIHI9IjEuNSIgZmlsbD0iIzkwOWFhYSIgb3BhY2l0eT0iLjQzIi8+PGNpcmNsZSBjeD0iMjEuNSIgY3k9IjEyIiByPSIxLjUiIGZpbGw9IiM5MDlhYWEiIG9wYWNpdHk9Ii41NyIvPjxjaXJjbGUgY3g9IjIwLjIzIiBjeT0iMTYuNzUiIHI9IjEuNSIgZmlsbD0iIzkwOWFhYSIgb3BhY2l0eT0iLjcxIi8+PGNpcmNsZSBjeD0iMTYuNzUiIGN5PSIyMC4yMyIgcj0iMS41IiBmaWxsPSIjOTA5YWFhIiBvcGFjaXR5PSIuODYiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjIxLjUiIHI9IjEuNSIgZmlsbD0iIzkwOWFhYSIvPjxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgY2FsY01vZGU9ImRpc2NyZXRlIiBkdXI9IjAuNzVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgdHlwZT0icm90YXRlIiB2YWx1ZXM9IjAgMTIgMTI7MzAgMTIgMTI7NjAgMTIgMTI7OTAgMTIgMTI7MTIwIDEyIDEyOzE1MCAxMiAxMjsxODAgMTIgMTI7MjEwIDEyIDEyOzI0MCAxMiAxMjsyNzAgMTIgMTI7MzAwIDEyIDEyOzMzMCAxMiAxMjszNjAgMTIgMTIiLz48L2c+PC9zdmc+" />;
+
+    const textEle = typeof props.loading === 'object' && props.loading.text ?
+        <Text className="tarojs-table-loading-text">{props.loading.text}</Text> : '';
+
+    return (<View className="tarojs-table-loading">
+        <View className="tarojs-table-loading-content">
+            {imgEle}
+            {textEle}
+        </View>
+        {props.children}
+    </View>)
+}
+
+const TableEmpty: React.FC<TableEmptyProps> = (props) => {
+    const src = props.img || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNkNWQ1ZDUiIGQ9Ik0xNCAySDZhMiAyIDAgMCAwLTIgMnYxNmMwIDEuMTEuODkgMiAyIDJoMTJjMS4xMSAwIDItLjg5IDItMlY4bC02LTZtNCAxOEg2VjRoN3Y1aDV2MTFtLTMtN2MwIDEuODktMi4yNSAyLjA3LTIuMjUgMy43NmgtMS41YzAtMi40NCAyLjI1LTIuMjYgMi4yNS0zLjc2YzAtLjgyLS42Ny0xLjUtMS41LTEuNXMtMS41LjY4LTEuNSAxLjVIOWMwLTEuNjUgMS4zNC0zIDMtM3MzIDEuMzUgMyAzbS0yLjI1IDQuNVYxOWgtMS41di0xLjVoMS41WiIvPjwvc3ZnPg==';
+
+    return (
+        <View className="tarojs-table-empty">
+            <Image
+                className="tarojs-table-empty-img"
+                mode="widthFix"
+                src={src}
+            />
+            <Text className="tarojs-table-empty-text">
+                {props.text || '暂无数据'}
+            </Text>
+        </View>
+    );
 }
 
 const TableColGroup: React.FC<TableColGroupProps> = (props) => {
@@ -256,6 +322,7 @@ const Table: React.FC<TableProps> = (props) => {
     const renderTable = () => {
         return (
             <View
+                disableScroll="disableScroll"
                 style={props.style}
                 className={cn('tarojs-table', props.className)}
             >
@@ -270,21 +337,37 @@ const Table: React.FC<TableProps> = (props) => {
         );
     };
 
+    if (props.dataSource.length === 0) {
+        return (
+            <TableLoadingWrapper loading={props.loading}>
+                <View
+                    style={{ ...props.wrapperStyle, maxWidth: props.scroll?.x, maxHeight: props.scroll?.y }}
+                    className={cn('tarojs-table-wrapper', props.wrapperClassName)}
+                >
+                    {renderTable()}
+                    <TableEmpty {...props.empty} />
+                </View>
+            </TableLoadingWrapper>
+        );
+    }
+
     return (
-        <ScrollView
-            enhanced
-            bounces={false}
-            id={ref.current.tableID}
-            scrollX={Boolean(props.scroll?.x)}
-            scrollY={Boolean(props.scroll?.y)}
-            style={{ ...props.wrapperStyle, maxWidth: props.scroll?.x, maxHeight: props.scroll?.y }}
-            className={cn('tarojs-table-wrapper', props.wrapperClassName)}
-            onScroll={props.onScroll}
-            onScrollToLower={props.onScrollToLower}
-            onScrollToUpper={props.onScrollToUpper}
-        >
-            {renderTable()}
-        </ScrollView>
+        <TableLoadingWrapper loading={props.loading}>
+            <ScrollView
+                enhanced
+                bounces={false}
+                id={ref.current.tableID}
+                scrollX={Boolean(props.scroll?.x)}
+                scrollY={Boolean(props.scroll?.y)}
+                style={{ ...props.wrapperStyle, maxWidth: props.scroll?.x, maxHeight: props.scroll?.y }}
+                className={cn('tarojs-table-wrapper', props.wrapperClassName)}
+                onScroll={props.onScroll}
+                onScrollToLower={props.onScrollToLower}
+                onScrollToUpper={props.onScrollToUpper}
+            >
+                {renderTable()}
+            </ScrollView>
+        </TableLoadingWrapper>
     );
 };
 

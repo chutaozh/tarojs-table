@@ -1,4 +1,11 @@
 @color_1: #3e4f6d;
+@color_2: #909aaa;
+@color_3: #d5d5d5;
+
+.tarojs-table-wrapper {
+    position: relative;
+    overflow: auto;
+}
 
 .tarojs-table {
     width: max-content;
@@ -122,4 +129,54 @@
 
 .tarojs-table-align-right {
     text-align: right;
+}
+
+.tarojs-table-loading {
+    position: relative;
+    width: fit-content;
+    height: auto;
+
+    .tarojs-table-loading-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .tarojs-table-loading-img {
+            width: 72px;
+        }
+
+        .tarojs-table-loading-text {
+            margin-top: 20px;
+            color: @color_2;
+        }
+    }
+}
+
+.tarojs-table-empty {
+    height: 400px;
+    position: sticky;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 1px solid #edf2f7;
+
+    .tarojs-table-empty-img {
+        width: 80px;
+    }
+
+    .tarojs-table-empty-text {
+        margin-top: 20px;
+        color: @color_3;
+    }
 }

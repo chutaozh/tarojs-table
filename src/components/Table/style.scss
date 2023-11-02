@@ -1,23 +1,25 @@
 $color_1: #3e4f6d;
+$color_2: #909aaa;
+$color_3: #d5d5d5;
 
+.tarojs-table-wrapper {
+  position: relative;
+  overflow: auto;
+}
 .tarojs-table {
   width: max-content;
   min-width: 100%;
   display: table;
 }
-
 .tarojs-table-colgroup {
   display: table-column-group;
-
   > view {
     display: table-column;
   }
 }
-
 .tarojs-table-thead {
   display: table-header-group;
   background: #edf2f7;
-
   > .tarojs-table-row {
     > .tarojs-table-cell {
       color: $color_1;
@@ -25,30 +27,24 @@ $color_1: #3e4f6d;
     }
   }
 }
-
 .tarojs-table-fixed-header {
   position: sticky;
   top: 0;
   z-index: 3;
 }
-
 .tarojs-table-fixed-column {
   position: sticky;
   z-index: 2;
 }
-
 .tarojs-table-fixed-left {
   left: 0;
 }
-
 .tarojs-table-fixed-right {
   right: 0;
 }
-
 .tarojs-table-fixed-header.tarojs-table-fixed-column {
   z-index: 4;
 }
-
 .tarojs-table-fixed-left-last {
   &::after {
     right: -60px;
@@ -64,7 +60,6 @@ $color_1: #3e4f6d;
     z-index: 1;
   }
 }
-
 .tarojs-table-fixed-right-first {
   &::after {
     left: 0;
@@ -80,21 +75,17 @@ $color_1: #3e4f6d;
     z-index: 1;
   }
 }
-
 .tarojs-table-tbody {
   display: table-row-group;
 }
-
 .tarojs-table-row {
   display: table-row;
-
   &:nth-child(even) {
     > .tarojs-table-cell {
       background: #f8f9fa;
     }
   }
 }
-
 .tarojs-table-cell {
   display: table-cell;
   padding: 0.5rem;
@@ -103,7 +94,6 @@ $color_1: #3e4f6d;
   word-break: break-all;
   vertical-align: middle;
 }
-
 .tarojs-table-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -111,15 +101,55 @@ $color_1: #3e4f6d;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
-
 .tarojs-table-align-left {
   text-align: left;
 }
-
 .tarojs-table-align-center {
   text-align: center;
 }
-
 .tarojs-table-align-right {
   text-align: right;
+}
+.tarojs-table-loading {
+  position: relative;
+  width: fit-content;
+  height: auto;
+  .tarojs-table-loading-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .tarojs-table-loading-img {
+      width: 72px;
+    }
+    .tarojs-table-loading-text {
+      margin-top: 20px;
+      color: $color_2;
+    }
+  }
+}
+.tarojs-table-empty {
+  height: 400px;
+  position: sticky;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid #edf2f7;
+  .tarojs-table-empty-img {
+    width: 80px;
+  }
+  .tarojs-table-empty-text {
+    margin-top: 20px;
+    color: $color_3;
+  }
 }
