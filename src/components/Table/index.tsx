@@ -2,7 +2,7 @@ import * as React from 'react';
 import cn from 'classnames';
 import { View, Text, Image, ScrollView, BaseEventOrigFunction, ScrollViewProps, CommonEventFunction } from '@tarojs/components';
 
-interface BaseRowProps {
+interface RowProps {
     /** 行样式 */
     className?: string;
     /** 行内联样式 */
@@ -11,7 +11,7 @@ interface BaseRowProps {
     onTap?: CommonEventFunction;
 }
 
-export interface TableColumnProps {
+export interface ColumnProps {
     /** 列名 */
     title: React.ReactNode;
     /** 列唯一标识 */
@@ -38,21 +38,19 @@ export interface TableColumnProps {
 export interface TableProps {
     id?: string;
     /** 表格列 */
-    columns: TableColumnProps[];
+    columns: ColumnProps[];
     /** 表格数据 */
     dataSource: any[];
     /** 样式 */
     className?: string;
     /** 内联样式 */
     style?: React.CSSProperties;
-    /** Table 最外层的包裹容器（scroll-view）样式名 */
+    /** Table 最外层的包裹容器样式名 */
     wrapperClassName?: string;
-    /** Table 最外层的包裹容器（scroll-view）内联样式 */
+    /** Table 最外层的包裹容器内联样式 */
     wrapperStyle?: React.CSSProperties;
     /** 唯一标识 */
     rowKey?: string;
-    /** 高度 */
-    height?: number;
     /** 加载中遮罩 */
     loading?: boolean | LoadingProps;
     /** 空数据时显示 */
@@ -63,7 +61,7 @@ export interface TableProps {
      */
     scroll?: { x?: number | string, y?: number | string };
     /** 行属性 */
-    onRow?: (record: any, index: number) => BaseRowProps;
+    onRow?: (record: any, index: number) => RowProps;
     /**
      * 滚动时触发
      * @supported — weapp, alipay, swan, tt, qq, jd, h5, rn
@@ -81,16 +79,16 @@ export interface TableProps {
     onScrollToUpper?: CommonEventFunction;
 }
 
-interface TableRowProps extends BaseRowProps {
+interface TableRowProps extends RowProps {
     rowIndex: number;
     rowData: any;
-    columns: TableColumnProps[];
+    columns: ColumnProps[];
     fixedLeftCols: FixedColsProps[];
     fixedRightCols: FixedColsProps[];
 }
 
 interface TableColGroupProps {
-    columns: TableColumnProps[];
+    columns: ColumnProps[];
 }
 
 interface TableEmptyProps {
