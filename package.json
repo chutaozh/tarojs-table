@@ -1,8 +1,14 @@
 {
   "name": "tarojs-table",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "description": "Taro Table 组件",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "tarojs",
+    "tarojs-table"
+  ],
   "templateInfo": {
     "name": "default",
     "typescript": true,
@@ -19,16 +25,28 @@
   },
   "scripts": {
     "build:weapp": "taro build --type weapp",
-    "dev:weapp": "npm run build:weapp -- --watch"
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "rm": "node fs.config.js rm",
+    "cp": "node fs.config.js cp",
+    "tsc": "npm run rm && npm run cp && tsc --project tsconfig.build.json"
   },
   "browserslist": [
     "last 3 versions",
     "Android >= 4.1",
     "ios >= 8"
   ],
+  "peerDependencies": {
+    "@tarojs/components": ">=3.6.0",
+    "react": ">=18.0.0",
+    "classnames": ">=2.3.2"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.7.7",
     "@tarojs/components": "3.6.2",
+    "classnames": "^2.3.2",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.7.7",
     "@tarojs/helper": "3.6.2",
     "@tarojs/plugin-framework-react": "3.6.2",
     "@tarojs/plugin-platform-alipay": "3.6.2",
@@ -42,11 +60,6 @@
     "@tarojs/runtime": "3.6.2",
     "@tarojs/shared": "3.6.2",
     "@tarojs/taro": "3.6.2",
-    "classnames": "^2.3.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  },
-  "devDependencies": {
     "@babel/core": "^7.8.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
     "@tarojs/cli": "3.6.2",
@@ -55,6 +68,7 @@
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
+    "react-dom": "^18.0.0",
     "babel-preset-taro": "3.6.2",
     "eslint": "^8.12.0",
     "eslint-config-taro": "3.6.2",
