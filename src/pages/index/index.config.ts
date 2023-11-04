@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Taro Table'
+  navigationBarTitleText: 'Taro Table 组件'
 })

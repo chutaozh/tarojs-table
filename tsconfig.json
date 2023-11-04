@@ -20,7 +20,12 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "paths": {
+      "tarojs-table": [
+        "./src/components/Table"
+      ]
+    }
   },
   "include": [
     "./src",
