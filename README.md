@@ -1,9 +1,9 @@
 # tarojs-table
 
-<img alt="npm" src="https://img.shields.io/npm/v/cookie-utils-js?logo=npm&color=%234ac41c">
-<img alt="npm" src="https://img.shields.io/npm/dm/cookie-utils-js?logo=npm&color=%234ac41c">
-<img alt="GitHub forks" src="https://img.shields.io/github/forks/chutao-zhang/sleek-design-hooks?logo=github&color=%234ac41c">
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/chutao-zhang/cookie-utils-js?logo=github&color=%234ac41c">
+<img alt="npm" src="https://img.shields.io/npm/v/tarojs-table?logo=npm&color=%234ac41c">
+<img alt="npm" src="https://img.shields.io/npm/dm/tarojs-table?logo=npm&color=%234ac41c">
+<img alt="GitHub forks" src="https://img.shields.io/github/forks/chutao-zhang/tarojs-table?logo=github&color=%234ac41c">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/chutao-zhang/tarojs-table?logo=github&color=%234ac41c">
 
 ## 介绍
 
