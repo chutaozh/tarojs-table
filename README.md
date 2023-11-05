@@ -43,10 +43,6 @@ export default () => {
 };
 ```
 
-## 示例
-
-<img alt="" src="https://github.com/chutao-zhang/tarojs-table/tree/master/public/example.gif" />
-
 ## API
 
 ### Table Props
