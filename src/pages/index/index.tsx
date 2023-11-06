@@ -1,14 +1,14 @@
-import { View } from '@tarojs/components'
-import Table, { ColumnProps } from 'tarojs-table';
-import 'tarojs-table/style.less'
-import './index.less'
+import { View } from '@tarojs/components';
 import { useEffect, useState } from 'react';
+import Table, { ColumnProps } from 'tarojs-table';
+import 'tarojs-table/style.css';
 
 export default () => {
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<any[]>([]);
 
   useEffect(() => {
+    // 模拟loading
     setLoading(true);
 
     setTimeout(() => {
@@ -99,19 +99,17 @@ export default () => {
       fixed: 'right',
       align: 'center',
       className: 'action-cell',
-      render: (text: any, record: any, index: number) => <View>编辑</View>
+      render: (text: any, record: any, index: number) => <View style={{ color: "blue" }}>编辑</View>
     }
   ];
 
   return (
-    <View className='index'>
-      <Table
-        loading={loading}
-        columns={columns}
-        dataSource={dataSource}
-        scroll={{ y: '100vh', x: '100vw' }}
-        onRow={() => ({ onTap: console.log })}
-      />
-    </View>
+    <Table
+      loading={loading}
+      columns={columns}
+      dataSource={dataSource}
+      scroll={{ y: '100vh', x: '100vw' }}
+      onRow={() => ({ onTap: console.log })}
+    />
   );
 };

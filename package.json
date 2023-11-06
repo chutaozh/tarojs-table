@@ -1,8 +1,8 @@
 {
   "name": "tarojs-table",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": false,
-  "description": "Taro Table 组件",
+  "description": "tarojs-table，一个简单的基础表格组件",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "keywords": [
