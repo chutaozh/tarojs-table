@@ -9,7 +9,7 @@
 
 ## 介绍
 
-**tarojs-table** 是一个基于 **Taro3.x** 和 **React18.x** 封装的基础表格。
+**tarojs-table 是一个基于 Taro3.x 和 React18.x 封装的基础表格。**
 
 <font size=2 color=#808080 >注意：这只是一个非常基础的表格组件，暂不支持合并行/列，展开行等功能，请谨慎选用。（所支持的功能请看<strong>属性配置</strong>）</font>
 
