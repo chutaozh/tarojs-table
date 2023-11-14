@@ -63,7 +63,7 @@ export default () => {
       title: '姓名',
       dataIndex: 'name',
       key: 'name',
-      width: 100,
+      width: 110,
       className: 'name-cell',
     },
     {
