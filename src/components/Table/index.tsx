@@ -1,6 +1,7 @@
 import * as React from 'react';
 import cn from 'classnames';
-import { View, Text, Image, ScrollView, BaseEventOrigFunction, ScrollViewProps, CommonEventFunction } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import { View, Text, Image, ScrollView, BaseEventOrigFunction, ScrollViewProps, CommonEventFunction, BaseEventOrig } from '@tarojs/components';
 
 interface RowProps {
     /** 行样式 */
@@ -210,9 +211,12 @@ const TableRow: React.FC<TableRowProps> = (props) => {
 };
 
 const Table: React.FC<TableProps> = (props) => {
-    const ref = React.useRef({ tableID: props.id || `_${Array.from({ length: 4 }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('')}` });
+    const ref = React.useRef({
+        tableID: props.id || `_${Array.from({ length: 4 }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('')}`
+    });
     const [fixedLeftCols, setFixedLeftCols] = React.useState<FixedColsProps[]>([]);
     const [fixedRightCols, setFixedRightCols] = React.useState<FixedColsProps[]>([]);
+    const [containerWidth, setContainerWidth] = React.useState(0);
 
     (function () {
         const fixedCount = props.columns.filter(col => col.fixed).length;
@@ -221,7 +225,25 @@ const Table: React.FC<TableProps> = (props) => {
         if (fixedCount !== fixedWidthCount) {
             throw new Error('固定列缺少列宽，请给需要固定的列指定列宽');
         }
-    })()
+    })();
+
+    React.useEffect(() => {
+        let width = 0;
+        Taro.createSelectorQuery()
+            .select(`#${ref.current.tableID}`)
+            .boundingClientRect((rect) => {
+                width = rect?.width || 0;
+                setContainerWidth(width);
+            })
+            .select(`#${ref.current.tableID} .tarojs-table`)
+            .boundingClientRect((rect) => {
+                const contentWidth = rect?.width || 0;
+
+                if (contentWidth > width) {
+                    setFixedRightCols(fixedRightCols.map((col, idx) => ({ ...col, firstRight: idx === 0 })));
+                }
+            }).exec();
+    }, [props.dataSource, fixedRightCols.length]);
 
     /** 计算每个固定列的贴边位置 */
     React.useEffect(() => {
@@ -232,15 +254,11 @@ const Table: React.FC<TableProps> = (props) => {
 
         props.columns.forEach((col, index) => {
             if (col.fixed === 'left') {
-                if (fixedLeftCols.length > 0) {
-                    fixedLeftCols[fixedLeftCols.length - 1].lastLeft = false;
-                }
-
-                fixedLeftCols.push({ index, left, width: col.width || 0, lastLeft: true });
+                fixedLeftCols.push({ index, left, width: col.width || 0, lastLeft: false });
                 left = left + (col.width || 0);
             } else if (col.fixed === 'right') {
                 right = right - (col.width || 0);
-                fixedRightCols.push({ index: index, right, width: col.width || 0, firstRight: fixedRightCols.length === 0 });
+                fixedRightCols.push({ index: index, right, width: col.width || 0, firstRight: false });
             }
         });
 
@@ -335,6 +353,26 @@ const Table: React.FC<TableProps> = (props) => {
         );
     };
 
+    const handleScroll = (e: BaseEventOrig<ScrollViewProps.onScrollDetail>) => {
+        if (fixedLeftCols.length > 0) {
+            if (e.detail.scrollLeft > 0 && !fixedLeftCols[fixedLeftCols.length - 1].lastLeft) {
+                setFixedLeftCols(fixedLeftCols.map((col, idx) => ({ ...col, lastLeft: idx === (fixedLeftCols.length - 1) })));
+            } else if (e.detail.scrollLeft === 0 && fixedLeftCols[fixedLeftCols.length - 1].lastLeft) {
+                setFixedLeftCols(fixedLeftCols.map((col) => ({ ...col, lastLeft: false })));
+            }
+        }
+
+        if (fixedRightCols.length > 0) {
+            if ((e.detail.scrollLeft + containerWidth) < e.detail.scrollWidth && !fixedRightCols[0].firstRight) {
+                setFixedRightCols(fixedRightCols.map((col, idx) => ({ ...col, firstRight: idx === 0 })));
+            } else if ((e.detail.scrollLeft + containerWidth) === e.detail.scrollWidth && fixedRightCols[0].firstRight) {
+                setFixedRightCols(fixedRightCols.map((col) => ({ ...col, firstRight: false })));
+            }
+        }
+
+        props.onScroll?.(e);
+    };
+
     if (props.dataSource.length === 0) {
         return (
             <TableLoadingWrapper loading={props.loading}>
@@ -359,7 +397,7 @@ const Table: React.FC<TableProps> = (props) => {
                 scrollY={Boolean(props.scroll?.y)}
                 style={{ ...props.wrapperStyle, maxWidth: props.scroll?.x, maxHeight: props.scroll?.y }}
                 className={cn('tarojs-table-wrapper', props.wrapperClassName)}
-                onScroll={props.onScroll}
+                onScroll={handleScroll}
                 onScrollToLower={props.onScrollToLower}
                 onScrollToUpper={props.onScrollToUpper}
             >
