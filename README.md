@@ -125,6 +125,9 @@ export default () => {
 | align     | 内容水平位置                                  | 'left' 丨 'center' 丨 'right'                               |  是  |   无   |
 | fixed     | 固定列（设置此项时须设置列宽）                | 'left' 丨 'right'                                           |  是  |   无   |
 | ellipsis  | 文本超出省略（默认 1 行省略，可指定多行省略） | boolean 丨 number                                           |  是  |   无   |
+| sortable  | 是否可排序                                    | boolean                                                     |  否  |   无   |
+| sortOrder | 排序方式                                      | 'ascend'丨'descend'                                         |  否  |   无   |
+| onSort    | 自定义排序                                    | (order?: 'ascend'丨'descend') => void                       |  否  |   无   |
 | render    | 自定义渲染内容                                | (value: any, record: any, index: number) => React.ReactNode |  是  |   无   |
 
 ### RowProps
