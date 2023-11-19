@@ -1,6 +1,10 @@
 @color_1: #3e4f6d;
 @color_2: #909aaa;
 @color_3: #d5d5d5;
+@border_color_1: transparent transparent #c3c3c3 transparent;
+@border_color_2: #c3c3c3 transparent transparent transparent;
+@border_color_3: transparent transparent #0099cc transparent;
+@border_color_4: #0099cc transparent transparent transparent;
 
 .tarojs-table-wrapper {
     position: relative;
@@ -29,6 +33,11 @@
         >.tarojs-table-cell {
             color: @color_1;
             background: #edf2f7;
+
+            >view {
+                display: inline-flex;
+                align-items: center;
+            }
         }
     }
 }
@@ -98,6 +107,10 @@
     &:nth-child(even) {
         >.tarojs-table-cell {
             background: #f8f9fa;
+        }
+
+        >.tarojs-table-sorted {
+            background: #eefbff;
         }
     }
 }
@@ -179,4 +192,50 @@
         margin-top: 20px;
         color: @color_3;
     }
+}
+
+.tarojs-table-sortable {
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 8px;
+
+    &::before {
+        display: inline-block;
+        content: "";
+        width: 0;
+        height: 0;
+        border-width: 8px;
+        border-style: solid;
+        border-color: @border_color_1;
+    }
+
+    &::after {
+        display: inline-block;
+        content: "";
+        width: 0;
+        height: 0;
+        border-width: 8px;
+        border-style: solid;
+        border-color: @border_color_2;
+        margin-top: 6px;
+    }
+}
+
+.tarojs-table-sortable-ascend {
+    &::before {
+        border-color: @border_color_3;
+    }
+}
+
+.tarojs-table-sortable-descend {
+    &::after {
+        border-color: @border_color_4;
+    }
+}
+
+.tarojs-table-sorted {
+    background: #eefbff;
 }
