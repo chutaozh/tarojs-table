@@ -77,6 +77,11 @@ export default () => {
       dataIndex: 'age',
       key: 'age',
       width: 80,
+      sortable: true,
+      // sortOrder: 'ascend'
+      // onSort: (order) => {
+      //   setDataSource(dataSource.sort((a, b) => order === 'ascend' ? a.age - b.age : b.age - a.age));
+      // }
     },
     {
       title: '职业',

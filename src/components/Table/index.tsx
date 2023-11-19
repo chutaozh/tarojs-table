@@ -32,6 +32,12 @@ export interface ColumnProps {
      * @description — number 指定行数省略
      */
     ellipsis?: boolean | number;
+    /** 是否可排序 */
+    sortable?: boolean;
+    /** 排序方式 */
+    sortOrder?: 'ascend' | 'descend';
+    /** 自定义排序 */
+    onSort?: (order?: 'ascend' | 'descend') => void;
     /** 自定义渲染内容 */
     render?: (value: any, record: any, index: number) => React.ReactNode;
 }
@@ -84,6 +90,7 @@ interface TableRowProps extends RowProps {
     rowIndex: number;
     rowData: any;
     columns: ColumnProps[];
+    sortedCol?: string;
     fixedLeftCols: FixedColsProps[];
     fixedRightCols: FixedColsProps[];
 }
@@ -193,7 +200,8 @@ const TableRow: React.FC<TableRowProps> = (props) => {
                             [`tarojs-table-fixed-${col.fixed}`]: Boolean(col.fixed) && props.fixedLeftCols.length > 0,
                             'tarojs-table-fixed-left-last': fixedLeftCol?.lastLeft,
                             'tarojs-table-fixed-right-first': fixedRightCol?.firstRight,
-                            [`tarojs-table-align-${col.align}`]: Boolean(col.align)
+                            [`tarojs-table-align-${col.align}`]: Boolean(col.align),
+                            'tarojs-table-sorted': Boolean(props.sortedCol === col.dataIndex) && col.sortable,
                         }, col.className)}
                         onTap={props.onTap}
                     >
@@ -217,6 +225,7 @@ const Table: React.FC<TableProps> = (props) => {
     const [fixedLeftCols, setFixedLeftCols] = React.useState<FixedColsProps[]>([]);
     const [fixedRightCols, setFixedRightCols] = React.useState<FixedColsProps[]>([]);
     const [containerWidth, setContainerWidth] = React.useState(0);
+    const [sortCol, setSortCol] = React.useState({ dataIndex: '', order: '' });
 
     (function () {
         const fixedCount = props.columns.filter(col => col.fixed).length;
@@ -292,6 +301,20 @@ const Table: React.FC<TableProps> = (props) => {
                     const fixedRightCol = fixedRightCols.find(m => m.index === index);
                     const left = fixedLeftCol?.left;
                     const right = fixedRightCol?.right;
+                    const sortOrder = col.sortOrder || sortCol.order;
+                    const nextOrder = sortOrder === 'ascend' ? 'descend' : sortOrder === 'descend' ? '' : 'ascend';
+
+                    const sortFunc = () => {
+                        if (col.sortable) {
+                            if (col.onSort) {
+                                col.onSort(nextOrder || undefined);
+                            }
+
+                            if (!col.sortOrder) {
+                                setSortCol({ dataIndex: Boolean(nextOrder) ? (col.dataIndex || '') : '', order: nextOrder });
+                            }
+                        }
+                    };
 
                     return (
                         <View
@@ -307,7 +330,15 @@ const Table: React.FC<TableProps> = (props) => {
                                 [`tarojs-table-align-${col.align}`]: Boolean(col.align)
                             }, col.className)}
                         >
-                            {col.title}
+                            <View onTap={sortFunc}>
+                                {col.title}
+                                {col.sortable ? <View
+                                    className={cn(
+                                        "tarojs-table-sortable", {
+                                        [`tarojs-table-sortable-${sortOrder}`]: Boolean(sortOrder)
+                                    })}
+                                /> : null}
+                            </View>
                         </View>
                     );
                 })}
@@ -317,7 +348,17 @@ const Table: React.FC<TableProps> = (props) => {
 
     /** 渲染表格数据 */
     const renderTableBody = () => {
-        return props.dataSource.map((record, index) => {
+        const _dataSource = Boolean(sortCol.dataIndex) && Boolean(sortCol.order) && props.columns.some(col => col.dataIndex === sortCol.dataIndex && col.sortable && !Boolean(col.onSort)) ?
+            [...props.dataSource].sort((a, b) => {
+                if (sortCol.order === "ascend") {
+                    return a[sortCol.dataIndex] > b[sortCol.dataIndex] ? 1 : -1;
+                }
+
+                return a[sortCol.dataIndex] > b[sortCol.dataIndex] ? -1 : 1
+            })
+            : props.dataSource;
+
+        return _dataSource.map((record, index) => {
             const rowKey = props.rowKey && record[props.rowKey] || index.toString();
 
             return (
@@ -325,6 +366,7 @@ const Table: React.FC<TableProps> = (props) => {
                     key={rowKey}
                     rowData={record}
                     rowIndex={index}
+                    sortedCol={sortCol.dataIndex}
                     columns={props.columns}
                     fixedLeftCols={Boolean(props.scroll?.x) ? fixedLeftCols : []}
                     fixedRightCols={Boolean(props.scroll?.x) ? fixedRightCols : []}
