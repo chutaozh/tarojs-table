@@ -139,6 +139,7 @@ $border-color_4: #0099cc transparent transparent transparent;
     flex-direction: column;
     .tarojs-table-loading-img {
       width: 72px;
+      height: auto;
     }
     .tarojs-table-loading-text {
       margin-top: 20px;
@@ -158,6 +159,7 @@ $border-color_4: #0099cc transparent transparent transparent;
   border-bottom: 1px solid #edf2f7;
   .tarojs-table-empty-img {
     width: 80px;
+    height: auto;
   }
   .tarojs-table-empty-text {
     margin-top: 20px;
