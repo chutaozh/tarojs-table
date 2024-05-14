@@ -1,6 +1,6 @@
 {
   "name": "tarojs-table",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "tarojs-table，一个简单的基础表格组件",
   "main": "lib/index.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chutao-zhang/tarojs-table.git"
+    "url": "git+https://github.com/chutaozh/tarojs-table.git"
   },
   "author": "chutao.zhang@outlook.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chutao-zhang/tarojs-table/issues"
+    "url": "https://github.com/chutaozh/tarojs-table/issues"
   },
   "scripts": {
     "build:weapp": "taro build --type weapp",
