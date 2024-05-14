@@ -1,6 +1,6 @@
 {
   "name": "tarojs-table",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "tarojs-table，一个简单的基础表格组件",
   "main": "lib/index.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chutao-zhang/tarojs-table.git"
+    "url": "git+https://github.com/chutaozh/tarojs-table.git"
   },
   "author": "chutao.zhang@outlook.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chutao-zhang/tarojs-table/issues"
+    "url": "https://github.com/chutaozh/tarojs-table/issues"
   },
   "scripts": {
     "build:weapp": "taro build --type weapp",
@@ -37,16 +37,21 @@
   ],
   "peerDependencies": {
     "@tarojs/components": ">=3.6.0",
-    "react": ">=18.0.0",
-    "classnames": ">=2.3.2"
+    "@tarojs/taro": ">=3.6.0",
+    "classnames": ">=2.3.2",
+    "react": ">=18.0.0"
   },
   "dependencies": {
     "@tarojs/components": "3.6.2",
+    "@tarojs/taro": "3.6.2",
     "classnames": "^2.3.2",
     "react": "^18.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.0",
     "@babel/runtime": "^7.7.7",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "@tarojs/cli": "3.6.2",
     "@tarojs/helper": "3.6.2",
     "@tarojs/plugin-framework-react": "3.6.2",
     "@tarojs/plugin-platform-alipay": "3.6.2",
@@ -59,16 +64,11 @@
     "@tarojs/react": "3.6.2",
     "@tarojs/runtime": "3.6.2",
     "@tarojs/shared": "3.6.2",
-    "@tarojs/taro": "3.6.2",
-    "@babel/core": "^7.8.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
-    "@tarojs/cli": "3.6.2",
     "@tarojs/webpack5-runner": "3.6.2",
     "@types/react": "^18.0.0",
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "react-dom": "^18.0.0",
     "babel-preset-taro": "3.6.2",
     "eslint": "^8.12.0",
     "eslint-config-taro": "3.6.2",
@@ -76,6 +76,7 @@
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^8.4.18",
+    "react-dom": "^18.0.0",
     "react-refresh": "^0.11.0",
     "stylelint": "^14.4.0",
     "typescript": "^4.1.0",

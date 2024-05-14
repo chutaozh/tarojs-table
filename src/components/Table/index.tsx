@@ -126,7 +126,7 @@ interface LoadingProps {
 
 interface TableLoadingProps {
     loading?: boolean | LoadingProps;
-    children?: React.ReactNode;
+    children?: any;
 }
 
 const TableLoadingWrapper: React.FC<TableLoadingProps> = (props) => {

@@ -3,8 +3,8 @@
 <p>
 <img alt="npm" src="https://img.shields.io/npm/v/tarojs-table?logo=npm&color=%234ac41c">
 <img alt="npm" src="https://img.shields.io/npm/dm/tarojs-table?logo=npm&color=%234ac41c">
-<img alt="GitHub forks" src="https://img.shields.io/github/forks/chutao-zhang/tarojs-table?logo=github&color=%234ac41c">
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/chutao-zhang/tarojs-table?logo=github&color=%234ac41c">
+<img alt="GitHub forks" src="https://img.shields.io/github/forks/chutaozh/tarojs-table?logo=github&color=%234ac41c">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/chutaozh/tarojs-table?logo=github&color=%234ac41c">
 </p>
 
 ## 介绍
@@ -88,7 +88,7 @@ export default () => {
 效果：
 
 <p>
-<img alt="" src="https://github.com/chutao-zhang/tarojs-table/blob/master/public/example.gif?raw=true" width="300" />
+<img alt="" src="https://github.com/chutaozh/tarojs-table/blob/master/public/example.gif?raw=true" width="300" />
 </p>
 
 ## 属性配置

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "declaration": true,
         "outDir": "./tarojs-table/lib",
-        "module": "CommonJS",
+        "module": "NodeNext",
         "jsx": "react-jsx",
         "target": "ES2015",
         "allowSyntheticDefaultImports": true,
