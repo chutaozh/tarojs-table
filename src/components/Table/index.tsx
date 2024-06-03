@@ -288,8 +288,8 @@ const Table: React.FC<TableProps> = (props) => {
         setFixedLeftCols(fixedLeftCols);
         setFixedRightCols(fixedRightCols);
     }, [
-        ...props.columns.map((col) => col.fixed),
-        ...props.columns.map((col) => col.width),
+        ...props.columns.map((col) => col.fixed).filter(Boolean),
+        ...props.columns.map((col) => col.width).filter(Boolean),
     ]);
 
     /** 渲染表头 */

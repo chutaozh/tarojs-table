@@ -1,6 +1,6 @@
 {
   "name": "tarojs-table",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": false,
   "description": "tarojs-table，一个简单的基础表格组件",
   "main": "lib/index.js",
