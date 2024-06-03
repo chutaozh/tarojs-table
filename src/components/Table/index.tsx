@@ -226,6 +226,8 @@ const Table: React.FC<TableProps> = (props) => {
     const [fixedRightCols, setFixedRightCols] = React.useState<FixedColsProps[]>([]);
     const [containerWidth, setContainerWidth] = React.useState(0);
     const [sortCol, setSortCol] = React.useState({ dataIndex: '', order: '' });
+    const fixedList = props.columns.map((col) => col.fixed).filter(Boolean);
+    const widthList = props.columns.map((col) => col.width).filter(Boolean);
 
     (function () {
         const fixedCount = props.columns.filter(col => col.fixed).length;
@@ -287,10 +289,7 @@ const Table: React.FC<TableProps> = (props) => {
 
         setFixedLeftCols(fixedLeftCols);
         setFixedRightCols(fixedRightCols);
-    }, [
-        ...props.columns.map((col) => col.fixed).filter(Boolean),
-        ...props.columns.map((col) => col.width).filter(Boolean),
-    ]);
+    }, [JSON.stringify(fixedList), JSON.stringify(widthList)]);
 
     /** 渲染表头 */
     const renderTableHeader = () => {
