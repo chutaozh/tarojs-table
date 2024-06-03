@@ -300,16 +300,15 @@ const Table: React.FC<TableProps> = (props) => {
                     const fixedRightCol = fixedRightCols.find(m => m.index === index);
                     const left = fixedLeftCol?.left;
                     const right = fixedRightCol?.right;
-                    const sortOrder = col.sortOrder || sortCol.order;
+                    const sortOrder = col.onSort ? col.sortOrder : sortCol.order;
                     const nextOrder = sortOrder === 'ascend' ? 'descend' : sortOrder === 'descend' ? '' : 'ascend';
 
                     const sortFunc = () => {
                         if (col.sortable) {
                             if (col.onSort) {
                                 col.onSort(nextOrder || undefined);
-                            }
-
-                            if (!col.sortOrder) {
+                                setSortCol({ dataIndex: '', order: '' });
+                            } else {
                                 setSortCol({ dataIndex: Boolean(nextOrder) ? (col.dataIndex || '') : '', order: nextOrder });
                             }
                         }

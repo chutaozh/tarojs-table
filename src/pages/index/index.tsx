@@ -6,6 +6,7 @@ import 'tarojs-table/style.css';
 export default () => {
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<any[]>([]);
+  const [sorter, setSorter]=useState<{order?:'ascend'|'descend',field?:string}>({ order:'descend',field:'age' });
 
   useEffect(() => {
     // 模拟loading
@@ -48,7 +49,7 @@ export default () => {
       { name: 'John', gender: 'Male', age: 31, occupation: 'UI Designer', address: '265 Cedar Rd' }
     ]);
   }, []);
-
+  
   const columns: ColumnProps[] = [
     {
       title: '序号',
@@ -71,6 +72,15 @@ export default () => {
       dataIndex: 'gender',
       key: 'gender',
       width: 80,
+      sortable: true,
+      sortOrder: sorter.field==='gender'? sorter.order:undefined,
+      onSort: (order) => {
+        setSorter({
+          field: 'gender',
+          order: order
+        })
+        setDataSource(dataSource.sort((a, b) => order === 'ascend' ? a.gender - b.gender : b.gender - a.gender));
+      }
     },
     {
       title: '年龄',
@@ -78,10 +88,14 @@ export default () => {
       key: 'age',
       width: 80,
       sortable: true,
-      // sortOrder: 'ascend'
-      // onSort: (order) => {
-      //   setDataSource(dataSource.sort((a, b) => order === 'ascend' ? a.age - b.age : b.age - a.age));
-      // }
+      sortOrder: sorter.field==='age'? sorter.order:undefined,
+      onSort: (order) => {
+        setSorter({
+          field: 'age',
+          order: order
+        })
+        setDataSource(dataSource.sort((a, b) => order === 'ascend' ? a.age - b.age : b.age - a.age));
+      }
     },
     {
       title: '职业',
